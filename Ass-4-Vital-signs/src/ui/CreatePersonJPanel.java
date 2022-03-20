@@ -499,13 +499,22 @@ public class CreatePersonJPanel extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
         int selectedRowIndex =jTablePersonDirectory.getSelectedRow();
+        
+        defaultTableModel = (DefaultTableModel)jTablePersonDirectory.getModel();
+        int col = 0;
+        String value = defaultTableModel.getValueAt(selectedRowIndex, col).toString();
+        int getPersonId = Integer.parseInt(value);
+        deletePatient(getPersonId);
+        
         if(selectedRowIndex<0){
             JOptionPane.showMessageDialog(this,"Please select a row to delete.");
             return;
         }
+        
         personDirectory.deletePersonDetails(selectedRowIndex);
         JOptionPane.showMessageDialog(this,"Person details deleted..");
         populateTable();
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -594,6 +603,7 @@ public class CreatePersonJPanel extends javax.swing.JPanel {
             personDirectory.updatePersonDetails(selectedRowIndex, person);
             JOptionPane.showMessageDialog(this,"Person details updated..");
             populateTable();
+            updatePatient(person);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jTablePersonDirectoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonDirectoryMouseClicked
@@ -700,5 +710,22 @@ public class CreatePersonJPanel extends javax.swing.JPanel {
         cd.setCityName(pd.getCityName());
         cd.setpatientId(pd.getId());
         patientDirectory.addNewPatientDetails(cd);
+    }
+    
+    private void updatePatient (Person pd) {
+        Patient cd = new Patient();
+        cd.setPersonName(pd.getPersonName());
+        cd.setPersonAge(pd.getPersonAge());
+        cd.setGender(pd.getGender());
+        cd.setContactNumber(pd.getContactNumber());
+        cd.setHouseAddress(pd.getHouseAddress());
+        cd.setCommunityName(pd.getCommunityName());
+        cd.setCityName(pd.getCityName());
+        cd.setpatientId(pd.getId());
+        patientDirectory.updatePatientDetails(cd);
+    }
+    
+    private void deletePatient(int getPersonId) {
+        patientDirectory.deletePatientDetails(getPersonId);
     }
 }

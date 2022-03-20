@@ -33,7 +33,26 @@ public class PatientDirectory {
         return newPatientDirectory;
     }
     
-//    public void updatePatientDetails(int selectedRow, Patient patient) {
-//        patientDirectoryArrayList.set(selectedRow, patient);
-//    }
+    public void updatePatientDetails(Patient updatedPatient) {
+        int selectedRecord = 0;
+//        ArrayList<Patient> list = new ArrayList<>();
+        for (Patient cd : getPatientDirectoryArrayList()) {
+            if(cd.getpatientId() == updatedPatient.getpatientId()) {
+                patientDirectoryArrayList.set(selectedRecord, updatedPatient);
+            }
+            selectedRecord++;
+        }
+    }
+    
+    public void deletePatientDetails(int patientID) {
+        int selectedRecord = 0;
+        int deleteRecord = 0;
+        for (Patient cd : getPatientDirectoryArrayList()) {
+            if(cd.getpatientId() == patientID) {
+                deleteRecord = selectedRecord;
+            }
+            selectedRecord++;
+        }
+        patientDirectoryArrayList.remove(deleteRecord); 
+    }
 }
